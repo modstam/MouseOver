@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MouseOverServer.Infrastructure.Managers;
 using MouseOverServer.Infrastructure.Services;
+using System.Runtime.InteropServices;
 
 namespace MouseOverServer
 {
@@ -20,8 +21,21 @@ namespace MouseOverServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IMouseManager, MouseManager>();
-            services.AddTransient<IMouseService, WindowsMouseService>();
-                     
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                services.AddTransient<IMouseService, WindowsMouseService>();
+            }
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                //TODO: Implement Linux support
+            }
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                //TODO: Implement OSX support
+            }
+
+
             services.AddMvc();
         }
 

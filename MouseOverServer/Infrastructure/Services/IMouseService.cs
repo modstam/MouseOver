@@ -8,10 +8,10 @@
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
+        /// <param name="senderWidth"></param>
+        /// <param name="senderHeight"></param>
         /// <returns> true if success </returns>
-        bool SetAdjustedMousePosition(int x, int y, int width, int height);
+        bool SetAdjustedMousePosition(int x, int y, int senderWidth, int senderHeight);
 
         /// <summary>
         /// Attempts to set the absolute position of the mouse on the sever, 
