@@ -1,17 +1,40 @@
 ﻿using System;
+using System.Drawing;
+using System.Runtime.InteropServices;
 
 namespace MouseOverServer.Infrastructure.Services
 {
-    public class WindowsMouseService : IWindowsMouseService
+    public class WindowsMouseService : IMouseService
     {
+        [DllImport("User32.dll")]
+        private static extern bool SetCursorPos(int x, int y);
+
         public bool IsCompatibleSystem()
         {
-            throw new NotImplementedException();
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return true;
+            }
+            return false;
         }
+
 
         public bool SetAbsoluteMousePosition(int x, int y)
         {
-            throw new NotImplementedException();
+            try
+            {
+
+                if (x >= 0 && y >= 0)
+                {
+                    SetCursorPos(x, y);
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                //TODO: Handle logging 
+            }
+            return false;
         }
 
         public bool SetAdjustedMousePosition(int x, int y, int width, int height)

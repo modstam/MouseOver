@@ -1,6 +1,6 @@
 ﻿namespace MouseOverServer.Infrastructure.Services
 {
-    public interface IWindowsMouseService
+    public interface IMouseService
     {
         /// <summary>
         /// Approximates and sets an appropriate mouse position on the server, 

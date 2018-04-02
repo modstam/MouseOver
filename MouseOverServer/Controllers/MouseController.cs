@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using MouseOverServer.Infrastructure.Managers;
 using MouseOverServer.Infrastructure.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,11 +10,11 @@ namespace MouseOverServer.Controllers
     [Route("api/mouse")]
     public class MouseController : Controller
     {
-        private readonly IWindowsMouseService _windowsMouseService;
+        private readonly IMouseManager _mouseManager;
 
-        public MouseController(IWindowsMouseService windowsMouseService)
+        public MouseController(IMouseManager mouseManager)
         {
-            _windowsMouseService = windowsMouseService;
+            _mouseManager = mouseManager;
         }
 
         [HttpGet]
@@ -25,15 +26,11 @@ namespace MouseOverServer.Controllers
         [HttpGet("{x}/{y}/{width:int=0}/{height:int=0}")]
         public IActionResult Get(int x, int y, int width = 0, int height = 0)
         {
-            if (!_windowsMouseService.IsCompatibleSystem())
-            {
-                return StatusCode(500, "This system is not compatible.");
-            }
-
-            if(x != 0 && y != 0)
+            if (_mouseManager.SetMouseAbsolute(x, y))
             {
                 return Ok($"Updated mouse position to {x},{y}");
             }
+
             return BadRequest("Invalid input");
         }
     }

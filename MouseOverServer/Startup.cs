@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MouseOverServer.Infrastructure.Managers;
 using MouseOverServer.Infrastructure.Services;
 
 namespace MouseOverServer
@@ -18,8 +19,9 @@ namespace MouseOverServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IWindowsMouseService, WindowsMouseService>();
-
+            services.AddTransient<IMouseManager, MouseManager>();
+            services.AddTransient<IMouseService, WindowsMouseService>();
+                     
             services.AddMvc();
         }
 
