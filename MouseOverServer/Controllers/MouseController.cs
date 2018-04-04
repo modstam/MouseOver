@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using MouseOverServer.Infrastructure.Managers;
-using MouseOverServer.Infrastructure.Services;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MouseOverServer.Controllers
 {
@@ -26,7 +23,15 @@ namespace MouseOverServer.Controllers
         [HttpGet("{x}/{y}/{width:int=0}/{height:int=0}")]
         public IActionResult Get(int x, int y, int width = 0, int height = 0)
         {
-            if (_mouseManager.SetMouseAbsolute(x, y))
+            if(width == 0 && height == 0)
+            {
+                if (_mouseManager.SetMouseAbsolute(x, y))
+                {
+                    return Ok($"Updated mouse position to {x},{y}");
+                }
+            }
+
+            if (_mouseManager.SetMouseAdjusted(x, y, width, height))
             {
                 return Ok($"Updated mouse position to {x},{y}");
             }

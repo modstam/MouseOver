@@ -3,9 +3,15 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <StartupObject>MouseOverServer.Program</StartupObject>
+    <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
