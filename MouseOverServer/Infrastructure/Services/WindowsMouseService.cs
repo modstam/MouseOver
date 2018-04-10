@@ -8,6 +8,7 @@ namespace MouseOverServer.Infrastructure.Services
         private readonly int _currentWidth;
         private readonly int _currentHeight;
 
+        #region import windows api 
         [DllImport("User32.dll")]
         private static extern bool SetCursorPos(int x, int y);
 
@@ -16,6 +17,14 @@ namespace MouseOverServer.Infrastructure.Services
         const int ENUM_CURRENT_SETTINGS = -1;
 
         const int ENUM_REGISTRY_SETTINGS = -2;
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
+        //Mouse actions
+        private const int MOUSEEVENTF_LEFTDOWN = 0x02;
+        private const int MOUSEEVENTF_LEFTUP = 0x04;
+        private const int MOUSEEVENTF_RIGHTDOWN = 0x08;
+        private const int MOUSEEVENTF_RIGHTUP = 0x10;
 
         [StructLayout(LayoutKind.Sequential)]
         public struct DEVMODE
@@ -58,6 +67,7 @@ namespace MouseOverServer.Infrastructure.Services
             public int dmPanningHeight;
 
         }
+        #endregion
 
         public WindowsMouseService()
         {
@@ -92,8 +102,7 @@ namespace MouseOverServer.Infrastructure.Services
             {
                 try
                 {
-                    SetCursorPos(x, y);
-                    return true;
+                    return SetCursorPos(x, y);
                 }
                 catch (Exception e)
                 {
@@ -112,13 +121,44 @@ namespace MouseOverServer.Infrastructure.Services
 
                 try
                 {
-                    SetCursorPos((int)adjustedX, (int)adjustedY);
-                    return true;
+                    return SetCursorPos((int)adjustedX, (int)adjustedY);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     //TODO: Handle logging 
                 }
+            }
+            return false;
+        }
+
+        public bool ClickMouseAbsolutePosition(int x, int y)
+        {
+            try
+            {
+                SetAbsoluteMousePosition(x, y);
+                mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
+                mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+                return true;
+            }
+            catch (Exception e)
+            {
+                //TODO: Handle logging
+            }
+            return false;
+        }
+
+        public bool ClickMouseAdjustedPosition(int x, int y, int senderWidth, int senderHeight)
+        {
+            try
+            {
+                SetAdjustedMousePosition(x, y, senderWidth, senderHeight);
+                mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
+                mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+                return true;
+            }
+            catch (Exception e)
+            {
+                //TODO: Handle logging
             }
             return false;
         }

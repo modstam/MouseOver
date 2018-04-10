@@ -38,5 +38,25 @@ namespace MouseOverServer.Controllers
 
             return BadRequest("Invalid input");
         }
+
+        [Route("click/{x}/{y}/{width:int=0}/{height:int=0}")]
+        [HttpGet]
+        public IActionResult Click(int x, int y, int width = 0, int height = 0)
+        {
+            if (width == 0 && height == 0)
+            {
+                if (_mouseManager.ClickMouseAbsolute(x, y))
+                {
+                    return Ok($"Clicked mouse position {x},{y}");
+                }
+            }
+
+            if (_mouseManager.ClickMouseAdjusted(x, y, width, height))
+            {
+                return Ok($"Clicked mouse position {x},{y}");
+            }
+
+            return BadRequest("Invalid input");
+        }
     }
 }

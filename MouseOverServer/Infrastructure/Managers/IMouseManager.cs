@@ -9,5 +9,8 @@ namespace MouseOverServer.Infrastructure.Managers
     {
         bool SetMouseAbsolute(int x, int y);
         bool SetMouseAdjusted(int x, int y, int resX, int resY);
+
+        bool ClickMouseAbsolute(int x, int y);
+        bool ClickMouseAdjusted(int x, int y, int resX, int resY);
     }
 }
