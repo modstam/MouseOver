@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -13,13 +14,13 @@ namespace MouseOverClient
     public partial class StartPage : ContentPage
     {
 
-        private IDictionary<string, string> _machines;
+        private ConcurrentDictionary<string, string> _machines { get; set; }
         private readonly string _apiEndpoint = "/api/start/getname";
 
         public StartPage()
         {
-            _machines = new Dictionary<string, string>();
             InitializeComponent();
+            _machines = new ConcurrentDictionary<string, string>();
         }
 
         protected override void OnAppearing()
@@ -50,7 +51,7 @@ namespace MouseOverClient
                         string machine = await new StreamReader(responseStream).ReadToEndAsync();
                         if (!string.IsNullOrWhiteSpace(machine))
                         {
-                            _machines.Add(machine, address);
+                            _machines.TryAdd(machine, address);
                         }
                     }
 
