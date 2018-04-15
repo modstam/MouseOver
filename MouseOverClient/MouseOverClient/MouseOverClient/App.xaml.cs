@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System.Collections.Concurrent;
+using Xamarin.Forms;
 
 namespace MouseOverClient
 {
@@ -8,7 +9,7 @@ namespace MouseOverClient
 		{
 			InitializeComponent();
 
-			MainPage = new MouseOverClient.StartPage();
+			MainPage = new StartPage();
 		}
 
 		protected override void OnStart ()
