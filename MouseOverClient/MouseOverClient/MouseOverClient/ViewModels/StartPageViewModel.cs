@@ -1,56 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
+using MouseOverClient.Items;
 
 namespace MouseOverClient.ViewModels
 {
-    public class StartPageViewModel : INotifyPropertyChanged
-    {
-        
-
+    public class StartPageViewModel : ViewModelBase
+    {       
         private readonly string _apiEndpoint = "/api/start/getname";
-
-        private IDictionary<string, string> _machines;
-        private string mockData;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
+        
         public StartPageViewModel()
-        {         
-            _machines = new Dictionary<string, string>();
-            _machines.Add("Mock1", "192.168.1.1");
-            _machines.Add("Mock2", "192.168.1.2");
-            _machines.Add("Mock3", "192.168.1.3");
-
-            for (int addr = 1; addr < 256; addr++)
+        {
+            Machines = new ObservableCollection<MachineItem>
             {
-                TryGetMachineAsync($"http://192.168.1.{addr}:5000");
-            }
+                new MachineItem("mockdata1", "mockaddr"),
+                new MachineItem("mockdata2", "mockaddr")
+            };
+
+            //for (int addr = 1; addr < 256; addr++)
+            //{
+            //    TryGetMachineAsync($"http://192.168.1.{addr}:5000");
+            //}
         }
        
-        public string MockData
-        {
-            set
-            {
-                if(mockData != value)
-                {
-                    mockData = value;
-                    if(PropertyChanged != null)
-                    {
-                        PropertyChanged(this, new PropertyChangedEventArgs("MockData"));
-                    }
-                }
-            }
-            get
-            {
-                return mockData;
-            }
-        }
-        
+        public ObservableCollection<MachineItem> Machines { get; set; }
+
+
         private async Task TryGetMachineAsync(string address)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(address + _apiEndpoint);
@@ -68,9 +45,7 @@ namespace MouseOverClient.ViewModels
                         string machine = await new StreamReader(responseStream).ReadToEndAsync();
                         if (!string.IsNullOrWhiteSpace(machine))
                         {
-                            _machines.Add(machine, address);
-
-                            MockData += $"\n {machine}:{address}";
+                            Machines.Add(new MachineItem(machine, address));
                         }
                     }
 

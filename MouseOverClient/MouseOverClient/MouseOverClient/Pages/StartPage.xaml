@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MouseOverClient.StartPage">>
+
+    <StackLayout BackgroundColor="LightGray">
+        <Label Text="Hello World"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+        <ListView ItemsSource="{Binding Machines}" 
+                  BackgroundColor="LightGray"
+                  SeparatorVisibility="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell 
+                        TextColor="Black" 
+                        Text="{Binding Name}" 
+                        DetailColor="AntiqueWhite" 
+                        Detail="{Binding Address}">
+                    </TextCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>
