@@ -7,9 +7,12 @@
         <Label Text="Hello World"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
-        <ListView ItemsSource="{Binding Machines}" 
-                  BackgroundColor="LightGray"
-                  SeparatorVisibility="None">
+        <ListView 
+                ItemSelected="OnSelection"
+                x:Name="MachineList" 
+                ItemsSource="{Binding Machines}" 
+                BackgroundColor="LightGray"
+                SeparatorVisibility="None">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextCell 
