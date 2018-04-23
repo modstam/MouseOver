@@ -1,60 +1,36 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Net;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using MouseOverClient.Models;
 
 namespace MouseOverClient.ViewModels
 {
     public class StartPageViewModel : ViewModelBase
-    {       
-        private readonly string _apiEndpoint = "/api/start/getname";
-        
+    {
+        private readonly string _apiEndpoint = "api/start/getname";
+        private readonly System.Timers.Timer _timer;
+
         public StartPageViewModel()
         {
+
             Machines = new ObservableCollection<Machine>
             {
                 new Machine("mockdata1", "mockaddr"),
                 new Machine("mockdata2", "mockaddr")
             };
 
-            //for (int addr = 1; addr < 256; addr++)
-            //{
-            //    TryGetMachineAsync($"http://192.168.1.{addr}:5000");
-            //}
+            System.Net.ServicePointManager.DefaultConnectionLimit = 10;
+
+            _timer = new System.Timers.Timer();
+            _timer.Interval = 10000;
+            _timer.Elapsed += FindMachines;
+            _timer.Enabled = true;
+
         }
-       
+
         public ObservableCollection<Machine> Machines { get; set; }
 
-
-        private async Task TryGetMachineAsync(string address)
+        private void FindMachines(object sender, System.Timers.ElapsedEventArgs e)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(address + _apiEndpoint);
-            request.Method = WebRequestMethods.Http.Get;
-            request.ContentType = "text/plain";
-            request.Timeout = 2000;
-            request.Proxy = null;
-         
-            using (var response = await request.GetResponseAsync())
-            {
-                try
-                {
-                    using (var responseStream = response.GetResponseStream())
-                    {
-                        string machine = await new StreamReader(responseStream).ReadToEndAsync();
-                        if (!string.IsNullOrWhiteSpace(machine))
-                        {
-                            Machines.Add(new Machine(machine, address));
-                        }
-                    }
-
-                }
-                catch (Exception ex)
-                {
-                    //TODO: Handle logging
-                }
-            }
+            //do something here
         }
     }
 }
