@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MouseOverClient.Items
+namespace MouseOverClient.Models
 {
-    public class MachineItem
+    public class Machine
     {
-        public MachineItem(string name, string address)
+        public Machine(string name, string address)
         {
             this.Name = name;
             this.Address = address;

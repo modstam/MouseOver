@@ -1,4 +1,4 @@
-﻿using MouseOverClient.Items;
+﻿using MouseOverClient.Models;
 using MouseOverClient.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -20,11 +20,11 @@ namespace MouseOverClient
             {
                 return;
             }
-            var item = e.SelectedItem as MachineItem;
+            var item = e.SelectedItem as Machine;
 
             if(item != null)
             {
-                await this.Navigation.PushAsync(new MousePage(item.Name, item.Address));
+                await this.Navigation.PushAsync(new MousePage(item));
             }                   
         }
     }

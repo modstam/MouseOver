@@ -1,44 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MouseOverClient.Models;
 
 namespace MouseOverClient.ViewModels
 {
     public class MousePageViewModel : ViewModelBase
     {
-        private string _machineName;
-        private string _machineAddr;
+        private Machine _machine;
 
-        public MousePageViewModel(string machineName, string machineAddress)
+        public MousePageViewModel(Machine machine)
         {
-            MachineName = machineName;
-            MachineAddress = machineAddress;
+            _machine = machine;
         }
 
 
-        public string MachineName
+        public Machine Machine
         {
             get
             {
-                return _machineName;
+                return _machine;
             }
             set
             {
-                _machineName = value;
-                OnPropertyChanged(nameof(MachineName));
-            }
-        }
-
-        public string MachineAddress
-        {
-            get
-            {
-                return _machineAddr;
-            }
-            set
-            {
-                _machineAddr = value;
-                OnPropertyChanged(nameof(MachineAddress));
+                _machine = value;
+                OnPropertyChanged(nameof(Machine));
             }
         }
     }

@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
-using MouseOverClient.Items;
+using MouseOverClient.Models;
 
 namespace MouseOverClient.ViewModels
 {
@@ -13,10 +13,10 @@ namespace MouseOverClient.ViewModels
         
         public StartPageViewModel()
         {
-            Machines = new ObservableCollection<MachineItem>
+            Machines = new ObservableCollection<Machine>
             {
-                new MachineItem("mockdata1", "mockaddr"),
-                new MachineItem("mockdata2", "mockaddr")
+                new Machine("mockdata1", "mockaddr"),
+                new Machine("mockdata2", "mockaddr")
             };
 
             //for (int addr = 1; addr < 256; addr++)
@@ -25,7 +25,7 @@ namespace MouseOverClient.ViewModels
             //}
         }
        
-        public ObservableCollection<MachineItem> Machines { get; set; }
+        public ObservableCollection<Machine> Machines { get; set; }
 
 
         private async Task TryGetMachineAsync(string address)
@@ -45,7 +45,7 @@ namespace MouseOverClient.ViewModels
                         string machine = await new StreamReader(responseStream).ReadToEndAsync();
                         if (!string.IsNullOrWhiteSpace(machine))
                         {
-                            Machines.Add(new MachineItem(machine, address));
+                            Machines.Add(new Machine(machine, address));
                         }
                     }
 

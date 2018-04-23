@@ -15,7 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Items\MachineItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Machine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\MousePage.xaml.cs">
       <DependentUpon>MousePage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -39,5 +39,8 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Services\" />
   </ItemGroup>
 </Project>
