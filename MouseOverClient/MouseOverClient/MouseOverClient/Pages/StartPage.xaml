@@ -4,9 +4,10 @@
              x:Class="MouseOverClient.StartPage">>
 
     <StackLayout BackgroundColor="LightGray">
-        <Label Text="Hello World"
+        <Button Text="Scan Network"
                 VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+                HorizontalOptions="CenterAndExpand"
+                Clicked="OnButtonClicked"/>
         <ListView 
                 ItemSelected="OnSelection"
                 x:Name="MachineList" 

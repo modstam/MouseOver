@@ -1,5 +1,7 @@
 ﻿using MouseOverClient.Models;
 using MouseOverClient.ViewModels;
+using System;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -22,10 +24,16 @@ namespace MouseOverClient
             }
             var item = e.SelectedItem as Machine;
 
-            if(item != null)
+            if (item != null)
             {
                 await this.Navigation.PushAsync(new MousePage(item));
-            }                   
+            }
+        }
+
+        void OnButtonClicked(object sender, EventArgs e)
+        {
+            var viewModel = BindingContext as StartPageViewModel;
+            Task.Factory.StartNew(() => viewModel.ScanNetwork());
         }
     }
 }
