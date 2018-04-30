@@ -1,6 +1,7 @@
 ﻿using MouseOverClient.Models;
 using MouseOverClient.ViewModels;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -10,6 +11,7 @@ namespace MouseOverClient
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class StartPage : ContentPage
     {
+        CancellationTokenSource cts;
         public StartPage()
         {
             InitializeComponent();
@@ -26,6 +28,7 @@ namespace MouseOverClient
 
             if (item != null)
             {
+                cts.Cancel();
                 await this.Navigation.PushAsync(new MousePage(item));
             }
         }
@@ -33,7 +36,8 @@ namespace MouseOverClient
         void OnButtonClicked(object sender, EventArgs e)
         {
             var viewModel = BindingContext as StartPageViewModel;
-            Task.Factory.StartNew(() => viewModel.ScanNetwork());
+            cts = new CancellationTokenSource();
+            Task.Factory.StartNew(() => viewModel.ScanNetwork(cts.Token));
         }
     }
 }

@@ -35,7 +35,7 @@ namespace MouseOverClient.ViewModels
             //do something here
         }
 
-        public async Task ScanNetwork()
+        public async Task ScanNetwork(CancellationToken cToken)
         {
             Machines.Clear();
 
@@ -45,6 +45,11 @@ namespace MouseOverClient.ViewModels
             {
                 for(int i = 0; i < _maximumConnections; i++)
                 {
+                    if (cToken.IsCancellationRequested)
+                    {
+                        Console.WriteLine("Network scanning cancelled..");
+                        return;
+                    }
                     string address = "192.168.1." + addr;
                     tasks[i] = Task.Run(() => SendPingAsync(address));
                     addr++;
