@@ -28,7 +28,10 @@ namespace MouseOverClient
 
             if (item != null)
             {
-                cts.Cancel();
+                if(cts != null)
+                {
+                    cts.Cancel();
+                }
                 await this.Navigation.PushAsync(new MousePage(item));
             }
         }
