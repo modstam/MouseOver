@@ -12,10 +12,12 @@ namespace MouseOverClient
     public partial class StartPage : ContentPage
     {
         CancellationTokenSource cts;
+        int apiPort = 5000;
+
         public StartPage()
         {
             InitializeComponent();
-            BindingContext = new StartPageViewModel();
+            BindingContext = new StartPageViewModel(apiPort);
         }
 
         public async void OnSelection(object sender, SelectedItemChangedEventArgs e)
@@ -32,7 +34,7 @@ namespace MouseOverClient
                 {
                     cts.Cancel();
                 }
-                await this.Navigation.PushAsync(new MousePage(item));
+                await this.Navigation.PushAsync(new MousePage(item, apiPort));
             }
         }
 

@@ -8,10 +8,11 @@ namespace MouseOverClient
     [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class MousePage : ContentPage
 	{
-        public MousePage (Machine machine)
+        public MousePage (Machine machine, int port)
 		{
 			InitializeComponent ();
-            BindingContext = new MousePageViewModel(machine);
-		}
+            BindingContext = new MousePageViewModel(machine, port);         
+        }
+
 	}
 }

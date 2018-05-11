@@ -12,13 +12,13 @@ namespace MouseOverClient.ViewModels
     public class StartPageViewModel : ViewModelBase
     {
         private readonly string _apiEndpoint = "api/start/getname";
-        private readonly int _apiPort = 5000;
+        private readonly int _apiPort;
         private readonly int _timeout = 1000;
         private readonly int _maximumConnections = 3;
 
-        public StartPageViewModel()
+        public StartPageViewModel(int port)
         {
-
+            _apiPort = port;
             Machines = new ObservableCollection<Machine>
             {
                 new Machine("mockdata1", "mockaddr"),
